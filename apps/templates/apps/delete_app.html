@@ -1,0 +1,22 @@
+<!-- delete_app.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete App</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Delete {{ app.name }}</h1>
+        <p>Are you sure you want to delete this app?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit">Delete App</button>
+        </form>
+        <button onclick="location.href='{% url 'app_list' %}'">Cancel</button>
+    </div>
+</body>
+</html>

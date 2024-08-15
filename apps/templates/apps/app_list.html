@@ -1,6 +1,133 @@
-<h2>Your Apps</h2>
-<ul>
-    {% for app in apps %}
-        <li>{{ app.name }}</li>
-    {% endfor %}
-</ul>
+<!-- app_list.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App List</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        .app-card {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        .app-card h3 {
+            margin: 0 0 10px;
+        }
+        .app-card p {
+            margin: 5px 0;
+        }
+        .app-card button {
+            padding: 5px 10px;
+            margin-right: 5px;
+            cursor: pointer;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .update-btn {
+            background-color: #4CAF50;
+        }
+        .delete-btn {
+            background-color: #f44336;
+        }
+        .test-btn {
+            background-color: #008CBA;
+        }
+        .add-btn {
+            margin-top: 20px;
+            background-color: #4CAF50;
+        }
+        .add-app-popup {
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        .add-app-popup h2 {
+            margin: 0 0 15px;
+        }
+        .close-btn {
+            background-color: #f44336;
+            float: right;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome, {{ user.username }}</h1>
+        <h2>List of Apps</h2>
+        <button class="add-btn" onclick="openAddAppPopup()">Add New App</button>
+        
+        <div id="appList">
+            {% for app in apps %}
+            <div class="app-card">
+                <h3>{{ app.name }}</h3>
+                <p>Uploaded by: {{ app.uploaded_by.username }}</p>
+                <p>Created at: {{ app.created_at }}</p>
+                <button class="update-btn" onclick="location.href='{% url 'update_app' app.id %}'">Update</button>
+                <button class="delete-btn" onclick="location.href='{% url 'delete_app' app.id %}'">Delete</button>
+                <button class="test-btn" onclick="testApp({{ app.id }})">Test App</button>
+            </div>
+            {% empty %}
+            <p>No apps available.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Add App Popup -->
+    <div id="addAppPopup" class="add-app-popup">
+        <h2>Add New App</h2>
+        <button class="close-btn" onclick="closeAddAppPopup()">Close</button>
+        <form id="addAppForm" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="add-btn">Add App</button>
+        </form>
+    </div>
+
+    <script>
+        function openAddAppPopup() {
+            document.getElementById('addAppPopup').style.display = 'block';
+        }
+
+        function closeAddAppPopup() {
+            document.getElementById('addAppPopup').style.display = 'none';
+        }
+
+        function testApp(appId) {
+            // Implement test functionality here
+            alert("Test functionality for App ID: " + appId + " not yet implemented.");
+        }
+
+        document.getElementById('addAppForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var formData = new FormData(this);
+            fetch("{% url 'add_app' %}", {
+                method: 'POST',
+                body: formData
+            }).then(response => response.json())
+              .then(data => {
+                if (data.success) {
+                    alert('App added successfully!');
+                    location.reload();
+                } else {
+                    alert('Error: ' + JSON.stringify(data.errors));
+                }
+            }).catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
