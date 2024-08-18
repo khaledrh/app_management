@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    {{ app.name }}
+{% endblock %}
+
+{%block content%}
+    <section>
+        <h1>{{ app.name }}</h1>
+            <p>{{ app.created_at }}</p>
+            <p>{{ app.uploaded_by }}</p>
+            <p>{{ app.apk_file_path }}</p>
+    </section>
+    
+{%endblock%}
