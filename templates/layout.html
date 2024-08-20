@@ -17,18 +17,24 @@
             <span role="img" aria-label="Home" title="Home">🏠</span>
         </a> | 
         <a href="{% url 'apps:list' %}">
-            <span role="img" aria-label="Apps" title="Apps">📰</span>
+            <span role="img" aria-label="Apps" title="Apps">📱</span>
         </a> | 
-        <a href="{% url 'users:register' %}">
-            <span role="img" aria-label="User Registration" title="User Registration">🚀</span>
-        </a> | 
-        <a href="{% url 'users:login' %}">
-            <span role="img" aria-label="User Login" title="User Login">🔏</span>
-        </a> |
-        <form class="logout" action="{% url 'users:logout' %}" method="post">
-            {% csrf_token %}
-            <button class="logout-button" aria-label="User Logout" title="User Logout">👋</button>
-        </form>
+        {% if  user.is_authenticated %}
+            <a href="{% url 'apps:new-app' %}">
+                <span role="img" aria-label="New Post" title="New Post">🆕</span>
+            </a> |
+            <form class="logout" action="{% url 'users:logout' %}" method="post">
+                {% csrf_token %}
+                <button class="logout-button" aria-label="User Logout" title="User Logout">👋</button>
+            </form>
+        {% else %}
+            <a href="{% url 'users:register' %}">
+                <span role="img" aria-label="User Registration" title="User Registration">🚀</span>
+            </a> | 
+            <a href="{% url 'users:login' %}">
+                <span role="img" aria-label="User Login" title="User Login">🔏</span>
+            </a> 
+        {% endif %}
     </nav>
     <main>
         {% block content %}

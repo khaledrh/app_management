@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    New App
+{% endblock %}
+
+{%block content%}
+    <section>
+        <h1>New App</h1>
+        <form class="form-with-validation" action="{% url 'apps:new-app' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form }}
+            <button class="form-submit" type="submit">Submit App</button>
+        </form>
+    </section>
+{%endblock%}

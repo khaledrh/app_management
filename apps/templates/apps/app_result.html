@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    {{ app.name }}
+{% endblock %}
+
+{%block content%}
+    <section>
+        <h1>Test Results</h1>
+
+        <p>Screen Changed: {{ result.screen_changed }}</p>
+        <h2>Screenshots:</h2>
+        <img src="{{ result.initial_screenshot.url }}" alt="Initial Screen">
+        <img src="{{ result.subsequent_screenshot.url }}" alt="Subsequent Screen">
+
+        <h2>Video Recording:</h2>
+        <video controls>
+        <source src="{{ result.video_recording.url }}" type="video/mp4">
+        Your browser does not support the video tag.
+        </video>
+
+        <h2>UI Hierarchy:</h2>
+        <pre>{{ result.ui_hierarchy }}</pre>
+        
+    </section>
+
+
+    
+{%endblock%}
+

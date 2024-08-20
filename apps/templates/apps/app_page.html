@@ -10,6 +10,14 @@
             <p>{{ app.created_at }}</p>
             <p>{{ app.uploaded_by }}</p>
             <p>{{ app.apk_file_path }}</p>
+
+        <form action="{% url 'apps:run_appium_test' app.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Run Test</button>
+        </form>
+        
     </section>
+
+
     
 {%endblock%}

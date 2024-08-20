@@ -2,8 +2,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, HttpResponse
+from .appium_script import appium_test, start_emulator, install_apk_on_emulator
 from .models import App
-from .forms import AppForm
+from .forms import CreateApp
+import os
 
 def apps_list(request):
     apps = App.objects.all().order_by('created_at')
@@ -12,6 +14,60 @@ def apps_list(request):
 def app_page(request, slug):
     apps = App.objects.get(slug=slug)
     return render(request, 'apps/app_page.html', {'app': apps})
+
+@login_required(login_url="/users/login/")
+def app_new(request):
+    if request.method == 'POST':
+        form = CreateApp(request.POST, request.FILES)
+        if form.is_valid():
+            newapp = form.save(commit=False)
+            newapp.uploaded_by = request.user
+            slug = f"{newapp.name}-{newapp.uploaded_by}"
+            slug = slug.replace(' ', '-')
+            newapp.slug = slug
+            newapp.save()
+            return redirect('apps:list')
+    else:
+        form = CreateApp()
+    form = CreateApp()
+    return render(request, 'apps/app_new.html', {'form': form})
+
+
+def run_appium_test_view(request, app_id):
+
+    # Retrieve the App object by its ID
+    app_upload = get_object_or_404(App, id=app_id)
+    
+    # Get the path to the uploaded APK file
+    apk_path = app_upload.apk_file_path.path
+
+    install_apk_on_emulator(apk_path,"Tradvo")
+
+    # appium_test()
+    return render(request, 'apps/app_list.html')
+    
+    
+    # # Define the path where the results will be stored (temporary or permanent)
+
+
+    # result_path = os.path.join('media', 'tmp_result')
+    # # Run the Appium test
+    # test_results = run_appium_test(apk_path, result_path)
+
+    # # Save the results back to the App object
+    # app_upload.first_screen_screenshot_path = test_results['initial_screenshot']
+    # app_upload.second_screen_screenshot_path = test_results['subsequent_screenshot']
+    # app_upload.video_recording_path = test_results['video_recording']
+    # app_upload.ui_hierarchy = test_results['ui_hierarchy']
+    # app_upload.screen_changed = test_results['screen_changed']
+    
+    # # Save the changes to the database
+    # app_upload.save()
+
+    # # Render the results in a template
+    # return render(request, 'app_result.html', {'app': app_upload})
+
+
 
 
 # @login_required

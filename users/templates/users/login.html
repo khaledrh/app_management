@@ -6,7 +6,7 @@
 
 {%block content%}
     <h2>User Login</h2>
-    <form class="form-with-validation" action="/users/login/" method="POST">
+    <form class="form-with-validation" action="{% url 'users:login' %}" method="POST">
         {% csrf_token %}
         <div>
             <label for="username">Username:</label>
@@ -16,6 +16,9 @@
             <label for="password">Password:</label>
             <input type="password" name="password" id="password" required>
         </div>
+        {% if request.GET.next %}
+            <input type="hidden" name="next" value={{ request.GET.next }} />
+        {% endif %}
         <button class="form-submit" type="submit">Login</button>
     </form>
     
