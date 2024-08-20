@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Delete {{ app.name }}
+{% endblock %}
+
+{% block content %}
+    <h1>Delete {{ app.name }}</h1>
+    <p>Are you sure you want to delete "{{ app.name }}"? This action cannot be undone.</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Confirm Delete</button>
+        <a href="{% url 'apps:page' slug=app.slug %}" class="btn btn-secondary">Cancel</a>
+    </form>
+{% endblock %}

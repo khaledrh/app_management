@@ -1,10 +1,14 @@
 {% extends 'layout.html' %}
+{% load i18n %}
+
 
 {% block title %}
     Home
 {% endblock %}
 
 {%block content%}
-    <h1>Home</h1>
-    <p>Check out my HomePage</p>
+    <h1>{% trans "Welcome" %}</h1>
+    <p>{% trans "This is a bilingual application." %}</p>
+            
+    <p>Current language: {{ LANGUAGE_CODE }}</p>
 {%endblock%}

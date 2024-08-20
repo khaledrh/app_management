@@ -7,6 +7,9 @@
 {%block content%}
     <section>
         <h1>App List</h1>
+        <a href="{% url 'apps:new-app' %}">
+            <span role="img" aria-label="New Post" title="New Post">🆕</span>
+        </a>
         {% for app in apps %}
             <article>
                 <h2>

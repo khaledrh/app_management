@@ -8,6 +8,7 @@
     <section>
         <h1>{{ app.name }}</h1>
             <p>{{ app.created_at }}</p>
+            <p>{{ app.updated_at }}</p>
             <p>{{ app.uploaded_by }}</p>
             <p>{{ app.apk_file_path }}</p>
 
@@ -16,6 +17,21 @@
             <button type="submit">Run Test</button>
         </form>
         
+        {% if request.user == app.uploaded_by %}
+            <a href="{% url 'apps:update' slug=app.slug %}" class="btn btn-primary">Update</a>
+            <form action="{% url 'apps:delete' slug=app.slug %}" method="post" style="display:inline;" onsubmit="return confirmDeletion();">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+        {% endif %}
+        
+    </section>
+
+    <script>
+        function confirmDeletion() {
+            return confirm("Are you sure you want to delete this app? This action cannot be undone.");
+        }
+    </script>
     </section>
 
 

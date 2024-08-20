@@ -1,16 +1,20 @@
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse, HttpResponse
-from .appium_script import appium_test, start_emulator, install_apk_on_emulator
+from .appium_script import  install_apk_on_emulator
 from .models import App
 from .forms import CreateApp
-import os
+from django.contrib import messages
 
+
+@login_required(login_url="/users/login/")
 def apps_list(request):
-    apps = App.objects.all().order_by('created_at')
-    return render(request, 'apps/app_list.html', {'apps': apps})
+    user = request.user
 
+    apps = App.objects.filter(uploaded_by=user).order_by('created_at')
+    return render(request, 'apps/app_list.html', {'user': user,'apps': apps})
+
+@login_required(login_url="/users/login/")
 def app_page(request, slug):
     apps = App.objects.get(slug=slug)
     return render(request, 'apps/app_page.html', {'app': apps})
@@ -31,6 +35,38 @@ def app_new(request):
         form = CreateApp()
     form = CreateApp()
     return render(request, 'apps/app_new.html', {'form': form})
+
+@login_required(login_url="/users/login/")
+def app_update(request, slug):
+    app = get_object_or_404(App, slug=slug)
+    
+    if request.user != app.uploaded_by:
+        messages.error(request, "You are not authorized to edit this app.")
+        return redirect('apps:page', slug=slug)
+
+    if request.method == 'POST':
+        form = CreateApp(request.POST, request.FILES, instance=app)
+        if form.is_valid():
+            form.save()
+            return redirect('apps:page', slug=slug)
+    else:
+        form = CreateApp(instance=app)
+    
+    return render(request, 'apps/app_edit.html', {'form': form, 'app': app})
+
+@login_required(login_url="/users/login/")
+def app_delete(request, slug):
+    app = get_object_or_404(App, slug=slug)
+    
+    if request.user != app.uploaded_by:
+        messages.error(request, "You are not authorized to delete this app.")
+        return redirect('apps:page', slug=slug)
+    
+    if request.method == 'POST':
+        app.delete()
+        return redirect('apps:list')
+    
+    return render(request, 'apps/app_confirm_delete.html', {'app': app})
 
 
 def run_appium_test_view(request, app_id):

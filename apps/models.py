@@ -1,9 +1,10 @@
 from django.contrib.auth.models import User
+from django.utils.translation import gettext_lazy as _
 from django.db import models
 
 class App(models.Model):
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, verbose_name=_("Name"))
     uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE)
     apk_file_path = models.FileField(upload_to='media/apks/' )
     slug = models.SlugField(default="", null=False)
