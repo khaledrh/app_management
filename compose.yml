@@ -13,6 +13,24 @@ services:
     volumes:
       - db_data:/var/lib/mysql
 
+  android_emulator:
+    build:
+      context: .
+      dockerfile: Dockerfile.android
+    image: android-emulator
+    environment:
+      - DISPLAY=:0
+      - ANDROID_HOME=/opt/android-sdk
+    ports:
+      - "5554:5554"
+      - "5555:5555"
+      - "5556:5556"
+    volumes:
+      - /dev/kvm:/dev/kvm
+      - ~/.android:/root/.android
+    command: >
+      bash -c "while :; do sleep 10; done"
+
   appium:
     image: appium/appium
     container_name: appium

@@ -1,0 +1,51 @@
+# Dockerfile for Android Emulator
+FROM ubuntu:20.04
+
+# Install required packages
+RUN apt-get update && apt-get install -y \
+    openjdk-8-jdk \
+    wget \
+    unzip \
+    libstdc++6 \
+    libz1 \
+    libqt5widgets5 \
+    libqt5gui5 \
+    libqt5core5a \
+    qemu-kvm \
+    libvirt-daemon-system \
+    libvirt-clients \
+    bridge-utils \
+    iputils-ping \
+    sudo
+
+# Set environment variables
+ENV ANDROID_HOME /opt/android-sdk
+ENV PATH ${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools
+
+# Download and install Android SDK
+RUN mkdir -p ${ANDROID_HOME} && \
+    wget -q https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip -O android-sdk.zip && \
+    unzip android-sdk.zip -d ${ANDROID_HOME}/cmdline-tools && \
+    rm android-sdk.zip && \
+    mv ${ANDROID_HOME}/cmdline-tools/cmdline-tools ${ANDROID_HOME}/cmdline-tools/latest
+
+RUN mkdir -p ~/.android/ && echo "### User Source Agreement\n### DO NOT MODIFY ###\naccepted-sdk-license-xyz=1\n" > ~/.android/repositories.cfg
+
+# Install SDK packages
+RUN timeout 30m /opt/android-sdk/cmdline-tools/latest/bin/sdkmanager --licenses || exit 0
+RUN timeout 30m /opt/android-sdk/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-30" "emulator" "system-images;android-30;google_apis;x86_64" || exit 0
+
+RUN ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --list
+
+# List installed packages and system images to verify installation
+RUN ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --list
+
+
+# # Create an AVD
+# RUN echo "no" | ${ANDROID_HOME}/cmdline-tools/latest/bin/avdmanager create avd -n test -k "system-images/android-30/google_apis/x86_64/" -d pixel
+
+# # Expose ports
+# EXPOSE 5554 5555 5556
+
+# # Start the emulator
+# CMD ${ANDROID_HOME}/emulator/emulator -avd test -no-snapshot -no-audio -no-window -gpu off
