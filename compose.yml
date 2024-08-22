@@ -1,0 +1,45 @@
+# version: '3.8'
+
+services:
+  db:
+    image: mysql:latest
+    container_name: db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: dbeckham123456
+      MYSQL_DATABASE: travado_db
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  appium:
+    image: appium/appium
+    container_name: appium
+    restart: always
+    environment:
+      - APPIUM_ALLOW_INSECURE=chromedriver_autodownload
+    ports:
+      - "4723:4723"
+    volumes:
+      - /dev/shm:/dev/shm
+    command: >
+      appium --log-level info
+
+  app:
+    build: .
+    container_name: app-management
+    ports:
+      - "8000:8000"  # Adjust the ports as needed
+    depends_on:
+      - db
+      - appium
+    environment:
+      - DATABASE_URL=mysql://root:dbeckham123456@db/travado_db
+    command:
+      /bin/sh -c
+      "python manage.py migrate &&
+      python manage.py runserver 0.0.0.0:8000"
+
+volumes:
+  db_data:

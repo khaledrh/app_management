@@ -7,8 +7,8 @@
 {% endblock %}
 
 {%block content%}
-    <h1>{% trans "Welcome" %}</h1>
-    <p>{% trans "This is a bilingual application." %}</p>
-            
-    <p>Current language: {{ LANGUAGE_CODE }}</p>
+    <div class="home-content">
+        <h1>{% trans "Welcome" %}</h1>
+        <p id="animated-text" class="hidden">{% trans "This is a bilingual application." %}</p>
+    </div>
 {%endblock%}

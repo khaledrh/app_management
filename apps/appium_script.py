@@ -1,61 +1,95 @@
 from appium import webdriver
 import time
 import os
-import unittest
 from appium import webdriver
 import subprocess
 from appium.options.android import UiAutomator2Options
 from appium.webdriver.common.appiumby import AppiumBy
+from selenium.common.exceptions import NoSuchElementException
 
-# def run_appium_test(apk_path, result_path):
-#     desired_caps = {
-#         'platformName': 'Android',
-#         'platformVersion': '15.0',
-#         'deviceName': 'emulator-5554',
-#         'app': apk_path,
-#         'automationName': 'UiAutomator2'
-#     }
 
-#     print("Desired Capabilities:", desired_caps)
-#     driver = webdriver.Remote('http://localhost:4723/', desired_caps)
 
-#     # # Start recording video
-#     # driver.start_recording_screen()
+def run_appium_test(apk_path, result_path):
 
-#     # # Capture initial screen and UI hierarchy
-#     # initial_screen_path = os.path.join(result_path, 'initial_screen.png')
-#     # driver.save_screenshot(initial_screen_path)
+    capabilities = dict(
+        platformName='Android',
+        automationName='uiautomator2',
+        deviceName='Android',
+        app=apk_path,
+        language='en',
+        locale='US'
+    )
 
-#     # ui_hierarchy = driver.page_source
+    appium_server_url = 'http://localhost:4723'
 
-#     # # Simulate a click on the first button
-#     # first_button = driver.find_element_by_class_name('android.widget.Button')
-#     # first_button.click()
-#     # time.sleep(2)  # Wait for screen transition
+    driver = webdriver.Remote(appium_server_url, options=UiAutomator2Options().load_capabilities(capabilities))
 
-#     # # Capture subsequent screen and UI hierarchy
-#     # subsequent_screen_path = os.path.join(result_path, 'subsequent_screen.png')
-#     # driver.save_screenshot(subsequent_screen_path)
+    try:
+        # Wait for the app to load
+        driver.implicitly_wait(10)
 
-#     # # Check for screen change
-#     # screen_changed = driver.page_source != ui_hierarchy
+        # Ensure the result directory exists
+        if not os.path.exists(result_path):
+            os.makedirs(result_path)
 
-#     # # Stop recording and save the video
-#     # video_path = os.path.join(result_path, 'test_video.mp4')
-#     # video_data = driver.stop_recording_screen()
-#     # with open(video_path, 'wb') as video_file:
-#     #     video_file.write(video_data)
+        # Capture the initial UI hierarchy
+        initial_ui_hierarchy = driver.page_source
 
-#     # Quit the driver
-#     driver.quit()
+        # Construct the path for the initial screenshot
+        initial_screenshot_path = os.path.join(result_path, 'initial_screenshot.png')
+        # Capture the initial screenshot
+        driver.save_screenshot(initial_screenshot_path)
 
-#     return {
-#         'initial_screenshot': 'path/to/initial_screenshot.png',
-#         'subsequent_screenshot': 'path/to/subsequent_screenshot.png',
-#         'video_recording': 'path/to/video.mp4',
-#         'ui_hierarchy': '<xml></xml>',
-#         'screen_changed': True
-#     }
+        # List of potential button identifiers to search for
+        button_identifiers = [
+            (AppiumBy.CLASS_NAME, 'android.widget.Button'),
+            (AppiumBy.CLASS_NAME, 'android.widget.ImageButton'),
+            (AppiumBy.XPATH, '//android.widget.Button'),  # An example of using XPATH
+            # Add other identifiers as needed
+        ]
+
+        # Variable to store the first button found
+        first_button = None
+
+        # Iterate through the list of button identifiers and find the first one
+        for by, identifier in button_identifiers:
+            try:
+                first_button = driver.find_element(by, identifier)
+                if first_button:
+                    break  # Exit the loop if a button is found
+            except NoSuchElementException:
+                continue  # Try the next identifier if no element is found
+
+        if first_button:
+            # Simulate a click on the first button found
+            first_button.click()
+
+            # Wait for possible screen change
+            time.sleep(3)
+
+            # Capture the UI hierarchy and screenshot after the click
+            subsequent_ui_hierarchy = driver.page_source
+            subsequent_screenshot_path = os.path.join(result_path, 'subsequent_screenshot.png')
+            driver.save_screenshot(subsequent_screenshot_path)
+
+            # Determine if the screen has changed
+            screen_changed = initial_ui_hierarchy != subsequent_ui_hierarchy
+        else:
+            print("No button found on the screen.")
+            subsequent_ui_hierarchy = initial_ui_hierarchy
+            subsequent_screenshot_path = initial_screenshot_path
+            screen_changed = False
+    finally:
+        # Quit the driver
+        driver.quit()
+
+    return {
+        'initial_screenshot': initial_screenshot_path,
+        'subsequent_screenshot': subsequent_screenshot_path,
+        'video_recording': None,  # Placeholder for actual video path
+        'ui_hierarchy': initial_ui_hierarchy,
+        'screen_changed': screen_changed
+    }
 
 def start_emulator(emulator_name):
     # Ensure that ANDROID_HOME is set
@@ -86,45 +120,9 @@ def install_apk_on_emulator(apk_path, emulator_name=None):
     command = ["adb", "install", apk_path]
     
     process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    output, error = process.communicate()
+    error = process.communicate()
 
     if process.returncode == 0:
         print(f"Successfully installed {apk_path} on the emulator.")
     else:
         print(f"Failed to install {apk_path}. Error: {error.decode('utf-8')}")
-
-
-def appium_test():
-    capabilities = dict(
-        platformName='Android',
-        automationName='uiautomator2',
-        deviceName='Android',
-        appPackage='com.android.settings',
-        appActivity='.Settings',
-        language='en',
-        locale='US'
-    )
-
-    appium_server_url = 'http://localhost:4723'
-
-    class TestAppium(unittest.TestCase):
-        
-        def setUp(self) -> None:
-            self.driver = webdriver.Remote(appium_server_url, options=UiAutomator2Options().load_capabilities(capabilities))
-            print("hello")
-
-        def tearDown(self) -> None:
-            if self.driver:
-                print("hello")
-                self.driver.quit()
-
-        def test_find_battery(self) -> None:
-            el = self.driver.find_element(by=AppiumBy.XPATH, value='//*[@text="Battery"]')
-            print("hello")
-            el.click()
-
-    suite = unittest.TestLoader().loadTestsFromTestCase(TestAppium)
-    unittest.TextTestRunner(verbosity=2).run(suite)
-
-    if __name__ == '__main__':
-        unittest.main()

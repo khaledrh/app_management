@@ -51,6 +51,21 @@ body {
     background-color: #f5f5f5;
     display: block;
   }
+
+  .logout-button {
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 18px;
+    border: none;
+    width: 100%;
+    line-height: 80px;
+    padding: 8px 16px;
+  }
+
+  .logout-button:hover {
+    background-color: #f5f5f5;
+    display: block;
+  }
   
   .hamburger {
     display: none;
@@ -117,7 +132,7 @@ body {
     height: 40px;
     margin-bottom: 30px;
   }
-  
+
   .menubar ul {
     padding: 0;
     list-style: none;
@@ -153,6 +168,97 @@ body {
     }
   }
 
+/* dropdown-menu */
+  /* Dropdown Button */
+.dropbtn {
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 18px;
+    border: none;
+    width: 100%;
+    line-height: 80px;
+    padding: 8px 16px;
+  }
+  
+  /* The container <div> - needed to position the dropdown content */
+  .dropdown {
+    position: relative;
+    line-height: 80px;
+  }
+  
+  /* Dropdown Content (Hidden by Default) */
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  /* Links inside the dropdown */
+  .dropdown-content a {
+    color: black;
+    text-decoration: none;
+    display: block;
+  }
+
+  .menubar .dropbtn {
+    line-height: 80px;
+  }
+  
+  /* Change color of dropdown links on hover */
+  .dropdown-content a:hover {background-color: #ddd;}
+  
+  /* Show the dropdown menu on hover */
+  .dropdown:hover .dropdown-content {display: block;}
+  
+  /* Change the background color of the dropdown button when the dropdown content is shown */
+  .dropdown:hover .dropbtn {background-color: #f5f5f5;}
+
+
+  /* Home page Style */
+
+  .home-content {
+    height: 90vh;
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    text-align: center;
+}
+
+/* Initial hidden state for the paragraph */
+.hidden {
+    opacity: 0;
+}
+
+/* Animation keyframes for rendering the text letter by letter */
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent; }
+    50% { border-color: black; }
+}
+
+#animated-text {
+    font-size: 1.5em;
+    display: inline-block;
+    border-right: 2px solid;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 0; /* Initial width for the typing effect */
+    opacity: 1;
+    animation: typing 5s steps(30, end), blink-caret 0.75s step-end infinite;
+}
 
 /* body {
     min-height: 100vh;

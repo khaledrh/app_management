@@ -22,15 +22,15 @@ from django.conf import settings
 from django.views.static import serve
 from django.conf.urls.i18n import i18n_patterns
 
+
 urlpatterns = [
     re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
     re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
-    path('i18n/', include('django.conf.urls.i18n'), name='set_language'),
+    path('set_language/<str:lang_code>/', views.set_language, name='set_language'),
     path('admin/', admin.site.urls),
-]
-
-urlpatterns += i18n_patterns(
     path('', views.homepage),
     path('users/', include('users.urls')),
     path('apps/', include('apps.urls')),
-)
+]
+
+

@@ -11,6 +11,14 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 from pathlib import Path
 from django.utils.translation import gettext_lazy as _
+import environ
+
+env = environ.Env(
+    # Set casting, default value
+    DEBUG=(bool, False)
+)
+
+environ.Env.read_env()
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -26,7 +34,7 @@ SECRET_KEY = 'django-insecure-a(=(cj4fgi1aqla2=4!5#q)-@*3$g%%p1tj(3dzru9%^kp_bl!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 LOGIN_URL = '/login/'
 
@@ -84,10 +92,13 @@ DATABASES = {
         'NAME': 'travado_db',
         'USER': 'root',
         'PASSWORD': 'dbeckham123456',
-        'HOST': 'localhost',  # or your database host
-        'PORT': '3306',       # default MySQL port
+        'HOST': 'localhost',  # or '127.0.0.1' or the actual IP address of the MySQL server
+        'PORT': '3306',
     }
 }
+
+# DATABASES = {}
+# DATABASES["default"] = env.db_url("DATABASE_URL", default="mysql://root:dbeckham123456@localhost:3307/travado_db")
 
 
 # Password validation
@@ -122,8 +133,8 @@ USE_L10N = True
 USE_TZ = True
 
 LANGUAGES = [
-    ('en', _('English')),
     ('fr', _('French')),
+    ('en', _('English')),
 ]
 
 LANGUAGE_CODE = 'fr'

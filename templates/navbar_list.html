@@ -1,0 +1,33 @@
+{% load static %}
+{% load i18n %}
+<div class="logo">
+    <a href="/"><img src="{% static 'img/Tradvo-logo.svg' %}" aria-label="HOME" title="Home" alt="HOME LOGO"></a>
+</div>
+<ul>
+    <li><a href="{% url 'apps:list'%}">
+        <span role="img" aria-label="Apps" title="Apps">Apps List</span>
+    </a></li>
+    {% if user.is_authenticated %}
+    <li><a href="{% url 'users:settings' %}">
+        <span class="username" aria-label="User Menu" title="User Menu">{% trans "Welcome: "%}{{ user.username }}
+    </a></li>
+    <li><form class="logout" action="{% url 'users:logout' %}" method="post" style="display:inline;">
+        {% csrf_token %}
+            <button class="logout-button" aria-label="User Logout" title="User Logout">Logout</button>
+    </form></li>
+    {% else %}
+    <li><a href="{% url 'users:register' %}">
+            <span role="img" aria-label="User Registration" title="User Registration">Sign Up</span>
+        </a></li> 
+        <li><a href="{% url 'users:login' %}">
+            <span role="img" aria-label="User Login" title="User Login">Sign In</span>
+        </a></li>
+    {% endif %}
+    <li><div class="dropdown">
+        <button class="dropbtn"> Language </button>
+        <div class="dropdown-content">
+            <a href="{% url 'set_language' 'fr' %}?next={{ request.path }}">French</a>
+            <a href="{% url 'set_language' 'en' %}?next={{ request.path }}">English</a>
+        </div>
+        </div></li>
+</ul> 
