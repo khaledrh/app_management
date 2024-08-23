@@ -12,6 +12,39 @@
             <p>{{ app.uploaded_by }}</p>
             <p>{{ app.apk_file_path }}</p>
 
+        {% if test_run %}
+            <hr>
+            <h2>Test Results</h2>
+
+            <div>
+                <h3>First Screen Screenshot:</h3>
+                <img src="{{ app.first_screen_screenshot_path.url }}" alt="First screen screenshot" width="300">
+            </div>
+
+            <div>
+                <h3>Second Screen Screenshot:</h3>
+                <img src="{{ app.second_screen_screenshot_path.url }}" alt="Second screen screenshot" width="300">
+            </div>
+
+            <div>
+                <h3>Video Recording:</h3>
+                <video width="400" controls>
+                    <source src="{{ app.video_recording_path.url }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+
+            <div>
+                <h3>UI Hierarchy:</h3>
+                <pre>{{ app.ui_hierarchy }}</pre>
+            </div>
+
+            <div>
+                <h3>Screen Changed:</h3>
+                <p>{{ app.screen_changed|yesno:"Yes,No" }}</p>
+            </div>
+        {% endif %}
+
         <form action="{% url 'apps:run_appium_test' app.id %}" method="post">
             {% csrf_token %}
             <button type="submit">Run Test</button>

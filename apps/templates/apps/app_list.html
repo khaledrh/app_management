@@ -6,22 +6,24 @@
 
 {%block content%}
     <section>
-        <h1>App List</h1>
-        <a href="{% url 'apps:new-app' %}">
-            <span role="img" aria-label="New Post" title="New Post">🆕</span>
-        </a>
-        {% for app in apps %}
-            <article>
-                <h2>
-                    <a href="{% url 'apps:page' slug=app.slug %}" >
+        <div class="app-list-header">
+            <h1>App List</h1>
+            <a href="{% url 'apps:new-app' %}">
+                <span role="img" aria-label="New Post" title="New Post">New +</span>
+            </a>
+        </div>
+        <div class="app-list">
+            {% for app in apps %}
+                <a href="{% url 'apps:page' slug=app.slug %}">
+                    <h2>
                         {{ app.name }}
-                    </a>
-                </h2>
-                <p>{{ app.created_at }}</p>
-                <p>{{ app.uploaded_by }}</p>
-                <p>{{ app.apk_file_path }}</p>
-            </article>
-        {% endfor %}
+                    </h2>
+                    <p>{{ app.created_at }}</p>
+                    <p>{{ app.uploaded_by }}</p>
+                    <p>{{ app.apk_file_path }}</p>
+                </a>
+            {% endfor %}
+        </div>
     </section>
     
 {%endblock%}

@@ -16,8 +16,17 @@ def apps_list(request):
 
 @login_required(login_url="/users/login/")
 def app_page(request, slug):
-    apps = App.objects.get(slug=slug)
-    return render(request, 'apps/app_page.html', {'app': apps})
+    app = App.objects.get(slug=slug)
+
+    test_run = (
+        app.first_screen_screenshot_path and
+        app.second_screen_screenshot_path and
+        app.video_recording_path and
+        app.ui_hierarchy and
+        app.screen_changed is not None  # check if it's not None, as it could be True or False
+    )
+
+    return render(request, 'apps/app_page.html', {'app': app, 'test_run': test_run})
 
 @login_required(login_url="/users/login/")
 def app_new(request):

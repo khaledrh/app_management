@@ -314,149 +314,76 @@ main {
   width: 125px;
 }
 
-
-/* body {
-    min-height: 100vh;
-    background-color: black;
-    color: whitesmoke;
-    font-size: 3rem;
+/* App List Header */
+.app-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
-nav {
-    padding: 1rem;
-    background-color: #44B78B;
-    color: white;
-    font-size: 2.5rem;
+.app-list-header h1 {
+  font-size: 2em;
 }
 
-main {
-    padding: 1rem;
+.app-list-header a {
+  font-size: 1em;
+  text-decoration: none;
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
 }
 
-section {
-    display: flex;
-    flex-flow: column;
-    gap: 1rem;
+.app-list-header a:hover {
+  background-color: #0056b3;
 }
 
-h1,
-h2 {
-    font-size: 2.5rem;
+/* App List */
+.app-list {
+  display: grid;
+  grid-template-rows: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 20px;
+  align-items: start;
 }
 
-p {
-    font-size: 1rem;
+/* App Card */
+.app-list a {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
 }
 
-a {
-    text-decoration: none;
-    color: #81dbb8;
+.app-list a:visited {
+  text-decoration: none;
 }
 
-a:hover {
-    opacity: .85;
+.app-list a:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-.banner {
-    display: block;
-    width: 100%;
-    max-width: 800px;
+.app-list a h2 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
 }
 
-
-
-.helptext {
-    font-size: 1rem;
-    margin-left: 1rem;
+.app-list a p {
+  font-size: 1em;
+  color: #555;
 }
 
-.helptext ul {
-    list-style-type: none;
+/* Responsive Styling */
+@media screen and (max-width: 600px) {
+  .app-list-header {
+      flex-direction: row;
+      align-items: flex-start;
+  }
+
 }
-
-.errorlist {
-    color: #F00;
-    margin-left: 2rem;
-}
-
-.errorlist li::marker {
-    content: '🚨 ';
-}
-
-
-.logout {
-    display: inline-block;
-}
-
-.logout-button {
-    font-size: 2.5rem;
-    background-color: rgb(0, 0, 0, 0);
-    border: none;
-}
-
-.logout-button:hover {
-    opacity: .85;
-}
-
-.high-contrast {
-    background-color: #000;
-    color: #fff;
-}
-
-.high-contrast a {
-    color: #0f0;
-}
-
-.high-contrast button {
-    background-color: #555;
-    color: #fff;
-}
-
-.user-menu {
-    position: relative;
-    display: inline-block;
-}
-
-.username {
-    cursor: pointer;
-    font-weight: bold;
-    margin-right: 10px;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-}
-
-.dropdown-content a, .dropdown-content form {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
-
-.dropdown-content a:hover {
-    background-color: #f1f1f1;
-}
-
-.user-menu:hover .dropdown-content {
-    display: block;
-}
-
-.logout-button {
-    border: none;
-    background: none;
-    color: black;
-    text-align: left;
-    padding: 12px 16px;
-    width: 100%;
-    cursor: pointer;
-}
-
-.logout-button:hover {
-    background-color: #f1f1f1;
-} */
