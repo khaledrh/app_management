@@ -1,4 +1,3 @@
-
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .appium_script import install_apk_on_emulator, run_appium_test
@@ -6,9 +5,7 @@ from django.core.files import File
 from .models import App
 from .forms import CreateApp
 from django.contrib import messages
-import os
-import unicodedata
-import re
+import os, unicodedata, re
 
 @login_required(login_url="/users/login/")
 def apps_list(request):
@@ -70,8 +67,8 @@ def app_delete(request, slug):
     
     return render(request, 'apps/app_confirm_delete.html', {'app': app})
 
-
 def create_slug(name, uploaded_by):
+
     # Combine the name and uploaded_by fields
     slug = f"{name}-{uploaded_by}"
     
@@ -132,6 +129,16 @@ def run_appium_test_view(request, app_id):
                 File(f),
                 save=True
             )
+
+    # Open the video recording file and save it to the ImageField
+    if test_results['video_recording']:
+        with open(test_results['video_recording'], 'rb') as f:
+            app_upload.video_recording_path.save(
+                os.path.basename(test_results['video_recording']),
+                File(f),
+                save=True
+            )
+
     # app_upload.video_recording_path = test_results['video_recording']
     app_upload.ui_hierarchy = test_results['ui_hierarchy']
     app_upload.screen_changed = test_results['screen_changed']
@@ -140,5 +147,4 @@ def run_appium_test_view(request, app_id):
     app_upload.save()
 
     # # Render the results in a template
-    # return render(request, 'app_result.html', {'app': app_upload})
-    return render(request, 'apps/app_list.html')
+    return render(request, 'apps/app_page.html', {'app': app_upload})
