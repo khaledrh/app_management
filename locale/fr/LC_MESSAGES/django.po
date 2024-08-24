@@ -3,12 +3,12 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
-#, fuzzy
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-24 15:02+0300\n"
+"POT-Creation-Date: 2024-08-24 17:41+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -34,108 +34,108 @@ msgstr "Nom"
 #: .\apps\templates\apps\app_confirm_delete.html:9
 #: .\apps\templates\apps\app_page.html:78
 msgid "Delete"
-msgstr ""
+msgstr "supprimer"
 
 #: .\apps\templates\apps\app_confirm_delete.html:10
 msgid "Are you sure you want to delete"
-msgstr ""
+msgstr "Etes-vous sûr de vouloir supprimer"
 
 #: .\apps\templates\apps\app_confirm_delete.html:10
 msgid "This action cannot be undone."
-msgstr ""
+msgstr "Cette action ne peut pas être annulée."
 
 #: .\apps\templates\apps\app_confirm_delete.html:13
 msgid "Confirm Delete"
-msgstr ""
+msgstr "Confirmer la suppression"
 
 #: .\apps\templates\apps\app_confirm_delete.html:14
 msgid "Cancel"
-msgstr ""
+msgstr "Annuler"
 
 #: .\apps\templates\apps\app_edit.html:5 .\apps\templates\apps\app_edit.html:9
 msgid "Edit"
-msgstr ""
+msgstr "modifier"
 
 #: .\apps\templates\apps\app_edit.html:13
 msgid "Save Changes"
-msgstr ""
+msgstr "Enregistrer les modifications"
 
 #: .\apps\templates\apps\app_list.html:5
 #: .\apps\templates\apps\app_list.html:11
 msgid "App List"
-msgstr ""
+msgstr "Liste des applications"
 
-#: .\apps\templates\apps\app_new.html:4 .\apps\templates\apps\app_new.html:9
+#: .\apps\templates\apps\app_new.html:5 .\apps\templates\apps\app_new.html:10
 msgid "New App"
-msgstr ""
+msgstr "Nouvelle application"
 
-#: .\apps\templates\apps\app_new.html:13
+#: .\apps\templates\apps\app_new.html:14
 msgid "Submit App"
-msgstr ""
+msgstr "Soumettre l'application"
 
 #: .\apps\templates\apps\app_page.html:11
 msgid "Created at:"
-msgstr ""
+msgstr "Créé à :"
 
 #: .\apps\templates\apps\app_page.html:12
 msgid "Last updated:"
-msgstr ""
+msgstr "Dernière mise à jour"
 
 #: .\apps\templates\apps\app_page.html:13
 msgid "Uploaded by:"
-msgstr ""
+msgstr "Téléchargé par :"
 
 #: .\apps\templates\apps\app_page.html:14
 msgid "APK file:"
-msgstr ""
+msgstr "Fichier APK :"
 
 #: .\apps\templates\apps\app_page.html:18
 msgid "Test Results"
-msgstr ""
+msgstr "Résultats des tests"
 
 #: .\apps\templates\apps\app_page.html:23
 msgid "First Screen Screenshot:"
-msgstr ""
+msgstr "Capture d'écran du premier écran :"
 
 #: .\apps\templates\apps\app_page.html:28
 msgid "Second Screen Screenshot:"
-msgstr ""
+msgstr "Capture d'écran du deuxième écran :"
 
 #: .\apps\templates\apps\app_page.html:33
 msgid "Video Recording:"
-msgstr ""
+msgstr "Enregistrement vidéo :"
 
 #: .\apps\templates\apps\app_page.html:36
 msgid "Your browser does not support the video tag."
-msgstr ""
+msgstr "Votre navigateur ne prend pas en charge la balise vidéo."
 
 #: .\apps\templates\apps\app_page.html:59
 msgid "UI Hierarchy:"
-msgstr ""
+msgstr "Hiérarchie de l'interface utilisateur :"
 
 #: .\apps\templates\apps\app_page.html:64
 msgid "Screen Changed:"
-msgstr ""
+msgstr "Écran modifié :"
 
 #: .\apps\templates\apps\app_page.html:71
 msgid "Run Test"
-msgstr ""
+msgstr "Exécuter un test"
 
 #: .\apps\templates\apps\app_page.html:75
 msgid "Update"
-msgstr ""
+msgstr "Mise à jour"
 
 #: .\apps\templates\apps\app_page.html:85
 msgid "Are you sure you want to delete this app? This action cannot be undone."
-msgstr ""
+msgstr "Êtes-vous sûr de vouloir supprimer cette application ? Cette action ne peut pas être annulée."
 
 #: .\templates\home.html:6
 msgid "Home"
-msgstr ""
+msgstr "Maison"
 
 #: .\templates\home.html:11
 msgid "Tradvo Android Tester"
-msgstr ""
+msgstr "Testeur Android Tradvo"
 
 #: .\templates\home.html:12
 msgid ""
@@ -145,14 +145,19 @@ msgid ""
 "Javascript for Front-End, the testing functionalty using Appium automated "
 "testing"
 msgstr ""
+"Cette application est conçue et développée par Khaled Ragab, pour Tradvo. Cette application "
+"la fonctionnalité consiste à tester les applications Android pour le changement de page lorsqu'un bouton"
+" est cliqué, l'application est construite en utilisant Django et Mysql pour le back-end et CSS et "
+"Javascript pour Front-End, la fonctionnalité de tests utilisant Appium automatisée"
+"essai"
 
 #: .\templates\layout.html:10
 msgid "Django App"
-msgstr ""
+msgstr "Application Django"
 
 #: .\templates\navbar_list.html:8
 msgid "Apps List"
-msgstr ""
+msgstr "Liste des applications"
 
 #: .\templates\navbar_list.html:12
 #, fuzzy
@@ -162,86 +167,86 @@ msgstr "Bienvenue"
 
 #: .\templates\navbar_list.html:16
 msgid "Sign Out"
-msgstr ""
+msgstr "Se déconnecter"
 
 #: .\templates\navbar_list.html:20
 msgid "Sign Up"
-msgstr ""
+msgstr "S'inscrire"
 
 #: .\templates\navbar_list.html:23
 msgid "Sign In"
-msgstr ""
+msgstr "Se connecter"
 
 #: .\templates\navbar_list.html:27
 msgid "Language"
-msgstr ""
+msgstr "Langue"
 
 #: .\users\templates\users\login.html:5 .\users\templates\users\login.html:10
 msgid "User Login"
-msgstr ""
+msgstr "Connexion utilisateur"
 
 #: .\users\templates\users\login.html:14
-#: .\users\templates\users\register.html:14
+#: .\users\templates\users\register.html:16
 msgid "Username:"
-msgstr ""
+msgstr "Nom d'utilisateur:"
 
 #: .\users\templates\users\login.html:18
-#: .\users\templates\users\register.html:18
+#: .\users\templates\users\register.html:20
 msgid "Password:"
-msgstr ""
+msgstr "Mot de passe:"
 
 #: .\users\templates\users\login.html:24
 msgid "Login"
-msgstr ""
+msgstr "se connecter"
 
 #: .\users\templates\users\register.html:5
 #: .\users\templates\users\register.html:10
 msgid "Register User"
-msgstr ""
+msgstr "Enregistrer un utilisateur"
 
-#: .\users\templates\users\register.html:22
+#: .\users\templates\users\register.html:24
 #: .\users\templates\users\settings.html:26
 msgid "Re-enter Password:"
-msgstr ""
+msgstr "Entrez à nouveau le mot de passe:"
 
-#: .\users\templates\users\register.html:28
+#: .\users\templates\users\register.html:30
 msgid "Register"
-msgstr ""
+msgstr "Registre"
 
 #: .\users\templates\users\settings.html:5
 #: .\users\templates\users\settings.html:11
 msgid "User Settings"
-msgstr ""
+msgstr "Paramètres utilisateur"
 
 #: .\users\templates\users\settings.html:14
 #: .\users\templates\users\settings.html:32
 msgid "Change Password"
-msgstr ""
+msgstr "Changer le mot de passe"
 
 #: .\users\templates\users\settings.html:18
 msgid "Old Password:"
-msgstr ""
+msgstr "Ancien mot de passe :"
 
 #: .\users\templates\users\settings.html:22
 msgid "New Password:"
-msgstr ""
+msgstr "Nouveau mot de passe :"
 
 #: .\users\templates\users\settings.html:39
 msgid "Text Size"
-msgstr ""
+msgstr "Taille du texte"
 
 #: .\users\templates\users\settings.html:47
 msgid "High Contrast Mode"
-msgstr ""
+msgstr "Mode contraste élevé"
 
 #: .\users\templates\users\settings.html:48
 msgid "Toggle High Contrast"
-msgstr ""
+msgstr "Activer le contraste élevé"
 
 #: .\users\templates\users\settings.html:53
 #: .\users\templates\users\settings.html:56
 msgid "Delete Account"
-msgstr ""
+msgstr "Supprimer le compte"
 
 #~ msgid "This is a bilingual application."
 #~ msgstr "Ceci est une application bilingue."

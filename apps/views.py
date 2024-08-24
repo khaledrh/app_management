@@ -5,7 +5,7 @@ from django.core.files import File
 from .models import App
 from .forms import CreateApp
 from django.contrib import messages
-import os, unicodedata, re
+import os, unicodedata, re, random, string
 
 @login_required(login_url="/users/login/")
 def apps_list(request):
@@ -55,6 +55,15 @@ def app_update(request, slug):
     if request.method == 'POST':
         form = CreateApp(request.POST, request.FILES, instance=app)
         if form.is_valid():
+            # Check if APK file has been updated
+            if 'apk_file_path' in form.changed_data:
+                # Reset test result fields
+                app.first_screen_screenshot_path = None
+                app.second_screen_screenshot_path = None
+                app.video_recording_path = None
+                app.ui_hierarchy = None
+                app.screen_changed = False
+            
             form.save()
             return redirect('apps:page', slug=slug)
     else:
@@ -101,6 +110,13 @@ def create_slug(name, uploaded_by):
     
     # Remove leading or trailing hyphens
     slug = slug.strip('-')
+
+    # Check if the slug is unique
+    original_slug = slug
+    while App.objects.filter(slug=slug).exists():
+        # Generate random characters to append
+        random_string = ''.join(random.choices(string.ascii_lowercase + string.digits, k=4))
+        slug = f"{original_slug}-{random_string}"
     
     return slug
 
