@@ -30,7 +30,7 @@ This is a web application that allows users to upload and test their Android app
 Before you begin, ensure you have met the following requirements:
 
 - **Python 3.8+**: Make sure Python is installed on your system.
-- **Django 3.2+**: This application is built with Django, a high-level Python web framework.
+- **Django 5.0+**: This application is built with Django, a high-level Python web framework.
 - **Node.js and npm**: Required for JavaScript dependencies.
 - **Appium**: Appium must be installed and configured for automated testing.
 - **Android SDK**: Required for Android emulation and testing.
@@ -63,10 +63,21 @@ Follow these steps to set up the application:
     ```bash
     npm install -g appium
 
-5. **Install Android SDK:**
+5. **Install Appium Driver UiAutomator2:** 
+
+    ```bash
+    appium driver install uiautomator2
+
+6. **Install Android SDK:**
 
     Download the Android SDK from Android Developers.
     Follow the installation instructions for your operating system.
+
+7. **Configure Android Emulator Image**
+
+    Create Android Image
+    Name Emulator "Tradvo"
+
 
 ## Configuration
 
@@ -74,12 +85,12 @@ Follow these steps to set up the application:
 
     Create a .env file in the root directory and set the following environment variables:
 
-    ```bash
-    SECRET_KEY='your-secret-key'
-    DEBUG=True
-    DATABASE_URL='sqlite:///db.sqlite3'  # Update for production environment
+    DATABASE_URL=mysql://[user]:[db_password]@[Host:Port]/[database_name]
     ANDROID_HOME='/path/to/android-sdk'  # Path to Android SDK
+    PATH=$PATH:$ANDROID_HOME/tools      # Path to Platform-tool
+    PATH=$PATH:$ANDROID_HOME/platform-tools
     JAVA_HOME='/path/to/jdk'  # Path to Java JDK
+
 
 2. **Django Settings:**
 
@@ -88,6 +99,7 @@ Follow these steps to set up the application:
 3. **Migrate the Database:**
 
     ```bash
+    python manige.py makemigration
     python manage.py migrate
 
 ## Running the Application

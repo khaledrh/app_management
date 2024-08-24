@@ -19,9 +19,10 @@
                     <h2>
                         {{ app.name }}
                     </h2>
-                    <p>{{ app.created_at }}</p>
-                    <p>{{ app.uploaded_by }}</p>
-                    <p>{{ app.apk_file_path }}</p>
+                    <p><strong>{% trans "APK file:" %}</strong> {{ app.apk_file_path }}</p>
+                    <p><strong>{% trans "Created at:" %}</strong> {{ app.created_at }}</p>
+                    <p><strong>{% trans "Last updated:" %}</strong> {{ app.updated_at }}</p>
+                    
                 </a>
             {% endfor %}
         </div>

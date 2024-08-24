@@ -18,7 +18,10 @@ env = environ.Env(
     DEBUG=(bool, False)
 )
 
-environ.Env.read_env()
+
+
+environ.Env.read_env(".env")
+
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -86,19 +89,9 @@ WSGI_APPLICATION = 'app_management.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'travado_db',
-        'USER': 'root',
-        'PASSWORD': 'dbeckham123456',
-        'HOST': 'localhost',  # or '127.0.0.1' or the actual IP address of the MySQL server
-        'PORT': '3306',
-    }
-}
 
-# DATABASES = {}
-# DATABASES["default"] = env.db_url("DATABASE_URL", default="mysql://root:dbeckham123456@localhost:3307/travado_db")
+DATABASES = {}
+DATABASES["default"] = env.db_url("DATABASE_URL", default="")
 
 
 # Password validation

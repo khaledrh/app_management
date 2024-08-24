@@ -6,12 +6,12 @@
 {% endblock %}
 
 {%block content%}
-    <section>
+    <section class="form-container">
         <h1>{% trans "New App" %}</h1>
         <form class="form-with-validation" action="{% url 'apps:new-app' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form }}
-            <button class="form-submit" type="submit">{% trans "Submit App" %}</button>
+            <button class="button-17" type="submit">{% trans "Submit App" %}</button>
         </form>
     </section>
 {%endblock%}

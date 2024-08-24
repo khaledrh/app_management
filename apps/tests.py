@@ -17,7 +17,7 @@ class AppTests(TestCase):
         self.delete_app_url = lambda slug: reverse('apps:delete', args=[slug])
 
         # Define the path to the sample APK file
-        self.apk_path = os.path.join('media', 'test', 'sample.apk')
+        self.apk_path = os.path.join( 'test', 'sample.apk')
 
         # Ensure the file exists before running the tests
         self.assertTrue(os.path.exists(self.apk_path), f"APK file does not exist at {self.apk_path}")

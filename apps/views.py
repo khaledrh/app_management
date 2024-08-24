@@ -57,6 +57,11 @@ def app_update(request, slug):
         if form.is_valid():
             # Check if APK file has been updated
             if 'apk_file_path' in form.changed_data:
+
+                # if app.apk_file_path and app.apk_file_path.name:
+                #     if app.apk_file_path.path:  # Ensure the path exists
+                #         app.apk_file_path.delete(save=False)
+
                 # Reset test result fields
                 app.first_screen_screenshot_path = None
                 app.second_screen_screenshot_path = None
@@ -74,12 +79,30 @@ def app_update(request, slug):
 @login_required(login_url="/users/login/")
 def app_delete(request, slug):
     app = get_object_or_404(App, slug=slug)
+
     
     if request.user != app.uploaded_by:
         messages.error(request, "You are not authorized to delete this app.")
         return redirect('apps:page', slug=slug)
     
     if request.method == 'POST':
+        if app.apk_file_path:
+            # Ensure the file exists and is a valid file path
+            if os.path.isfile(app.apk_file_path.path):
+                # Attempt to delete the file
+                app.apk_file_path.delete(save=False)
+
+        if app.first_screen_screenshot_path:
+            if os.path.isfile(app.first_screen_screenshot_path.path):
+                app.first_screen_screenshot_path.delete(save=False)
+    
+        if app.second_screen_screenshot_path:
+            if os.path.isfile(app.second_screen_screenshot_path.path):
+                app.second_screen_screenshot_path.delete(save=False)
+
+        if app.video_recording_path:
+            if os.path.isfile(app.video_recording_path.path):
+                app.video_recording_path.delete(save=False)
         app.delete()
         return redirect('apps:list')
     
@@ -135,6 +158,18 @@ def run_appium_test_view(request, app_id):
     # Run the Appium test
     test_results = run_appium_test(apk_path, result_path)
 
+        # Delete existing files if they exist in both the database and the filesystem
+    if app_upload.first_screen_screenshot_path:
+        if os.path.isfile(app_upload.first_screen_screenshot_path.path):
+            app_upload.first_screen_screenshot_path.delete(save=False)
+    
+    if app_upload.second_screen_screenshot_path:
+        if os.path.isfile(app_upload.second_screen_screenshot_path.path):
+            app_upload.second_screen_screenshot_path.delete(save=False)
+
+    if app_upload.video_recording_path:
+        if os.path.isfile(app_upload.video_recording_path.path):
+            app_upload.video_recording_path.delete(save=False)
 
     # Save the results back to the App object
     # Open the initial screenshot file and save it to the ImageField

@@ -53,7 +53,7 @@ services:
       - db
       - appium
     environment:
-      - DATABASE_URL=mysql://root:dbeckham123456@db/travado_db
+      - DATABASE_URL=mysql://root:dbeckham123456@localhost:3306/travado_db
     command:
       /bin/sh -c
       "python manage.py migrate &&

@@ -7,7 +7,7 @@ class App(models.Model):
     id = models.UUIDField(default=uuid.uuid4, primary_key=True, verbose_name="ID", editable=False)
     name = models.CharField(max_length=255, verbose_name=_("Name"))
     uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    apk_file_path = models.FileField(upload_to='apks/' )
+    apk_file_path = models.FileField(upload_to='apks/')
     slug = models.SlugField(default="", null=False)
     first_screen_screenshot_path = models.ImageField(upload_to='screenshots/', blank=True, null=True)
     second_screen_screenshot_path = models.ImageField(upload_to='screenshots/', blank=True, null=True)

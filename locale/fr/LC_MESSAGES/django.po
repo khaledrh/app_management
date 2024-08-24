@@ -53,8 +53,8 @@ msgid "Cancel"
 msgstr "Annuler"
 
 #: .\apps\templates\apps\app_edit.html:5 .\apps\templates\apps\app_edit.html:9
-msgid "Edit"
-msgstr "modifier"
+msgid "Edit:"
+msgstr "Modifier:"
 
 #: .\apps\templates\apps\app_edit.html:13
 msgid "Save Changes"

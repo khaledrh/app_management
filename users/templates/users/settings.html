@@ -29,7 +29,7 @@
                 {% if request.GET.next %}
                     <input type="hidden" name="next" value={{ request.GET.next }} />
                 {% endif %}
-                <button type="submit">{% trans "Change Password" %}</button>
+                <button type="submit" class="button-17">{% trans "Change Password" %}</button>
             </form>
        
     </section>
@@ -37,15 +37,15 @@
     <section>
         <!-- Text Size Adjustment -->
         <h2>{% trans "Text Size" %}</h2>
-        <button onclick="setFontSize('small')">A-</button>
-        <button onclick="setFontSize('medium')">A</button>
-        <button onclick="setFontSize('large')">A+</button>
+        <button onclick="setFontSize('small')" class="button-17">A-</button>
+        <button onclick="setFontSize('medium')" class="button-17">A</button>
+        <button onclick="setFontSize('large')" class="button-17">A+</button>
     </section>
 
     <section>
         <!-- High Contrast Mode -->
         <h2>{% trans "High Contrast Mode" %}</h2>
-        <button onclick="toggleContrast()">{% trans "Toggle High Contrast" %}</button>
+        <button onclick="toggleContrast()" class="button-17">{% trans "Toggle High Contrast" %}</button>
     </section>
 
     <section>
@@ -53,7 +53,7 @@
         <h2>{% trans "Delete Account" %}</h2>
         <form action="{% url 'users:delete_account' %}" method="post" onsubmit="return confirmDelete();">
             {% csrf_token %}
-            <button type="submit" class="btn btn-danger">{% trans "Delete Account" %}</button>
+            <button type="submit" class="button-17">{% trans "Delete Account" %}</button>
         </form>
     </section>
  </div>

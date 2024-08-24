@@ -6,6 +6,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
+from django.utils.translation import gettext_lazy as _
+from apps.models import App
+import os
 
 
 def register_view(request):
@@ -31,6 +34,9 @@ def login_view(request):
                 return redirect(request.POST.get('next'))
             else:
                 return redirect('apps:list')  
+        else:
+            _wrn_msg = 'Incorrect username or password. Please try again.'
+            messages.warning(request, _wrn_msg)
 
     else: 
         form = AuthenticationForm()
@@ -66,6 +72,27 @@ def change_password(request):
 def delete_account(request):
     if request.method == 'POST':
         user = request.user
+        apps = App.objects.filter(uploaded_by=user)
+
+        # Loop through each app and delete associated APK files
+        for app in apps:
+            if app.apk_file_path:
+                # Ensure the file exists and is a valid file path
+                if os.path.isfile(app.apk_file_path.path):
+                    # Attempt to delete the file
+                    app.apk_file_path.delete(save=False)
+
+            if app.first_screen_screenshot_path:
+                if os.path.isfile(app.first_screen_screenshot_path.path):
+                    app.first_screen_screenshot_path.delete(save=False)
+        
+            if app.second_screen_screenshot_path:
+                if os.path.isfile(app.second_screen_screenshot_path.path):
+                    app.second_screen_screenshot_path.delete(save=False)
+
+            if app.video_recording_path:
+                if os.path.isfile(app.video_recording_path.path):
+                    app.video_recording_path.delete(save=False)
         user.delete()
         messages.success(request, 'Your account has been deleted.')
         return redirect('apps:list')
