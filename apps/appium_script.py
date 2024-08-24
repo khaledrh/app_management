@@ -137,12 +137,32 @@ def start_emulator(emulator_name):
     subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     print(f"Starting emulator {emulator_name}...")
 
+    wait_for_emulator()
+
+def wait_for_emulator():
+    print("Waiting for emulator to start...")
+    
+    boot_completed = False
+    while not boot_completed:
+        try:
+            # Check the emulator boot status using adb
+            result = subprocess.run(["adb", "shell", "getprop", "sys.boot_completed"],
+                                    stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            if result.stdout.strip() == '1':
+                boot_completed = True
+            else:
+                print("Emulator is still booting...")
+                time.sleep(5)  
+        except Exception as e:
+            print(f"Error checking emulator status: {e}")
+            time.sleep(5)
+
+
 def install_apk_on_emulator(apk_path, emulator_name=None):
     
     # If an emulator name is provided, start the emulator
     if emulator_name:
         start_emulator(emulator_name)
-        time.sleep(5)
 
     # Ensure that the APK file exists
     if not os.path.exists(apk_path):

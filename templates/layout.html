@@ -7,13 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
         {% block title%}
-            Django App
+            {% trans "Django App" %}
         {% endblock %}
     </title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <script src="{% static 'js/user_settings.js' %}" defer></script>
     <script src="{% static "js/navbar.js" %}" defer></script>
     <script src="{% static "js/typing_effect.js" %}" defer></script>
+    <script src="{% static "js/slideshow.js" %}" defer></script>
     {% comment %} {% block head%}
     {% endblock %} {% endcomment %}
 </head>

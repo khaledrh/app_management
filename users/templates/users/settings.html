@@ -1,29 +1,42 @@
 {% extends 'layout.html' %}
+{% load i18n %}
 
 {% block title %}
-    User Settings
+    {% trans "User Settings" %}
 {% endblock %}
 
-{% comment %} {% block head%}
-    <script src="{% static 'js/user_settings.js' %}" defer></script>
-{% endblock %} {% endcomment %}
-
 {% block content %}
-    <h1>User Settings</h1>
-
+    
+<div class="form-container">
+    <h1>{% trans "User Settings" %}</h1>
     <section>
-        <!-- Change Password -->
-        <h2>Change Password</h2>
-        <form action="{% url 'users:change_password' %}" method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Change Password</button>
-        </form>
+        
+            <h2>{% trans "Change Password" %}</h2>
+            <form class="form-with-validation" action="{% url 'users:change_password' %}" method="post">
+                {% csrf_token %}
+                <div>
+                    <label for="id_old_password">{% trans "Old Password:" %}</label>
+                    <input type="password" name="old_password" id="id_old_password" required>
+                </div>
+                <div>
+                    <label for="id_new_password1">{% trans "New Password:" %}</label>
+                    <input type="password" name="new_password1" id="id_new_password1" required>
+                </div>
+                <div>
+                    <label for="id_new_password2">{% trans "Re-enter Password:" %}</label>
+                    <input type="password" name="new_password2" id="id_new_password2" required>
+                </div>
+                {% if request.GET.next %}
+                    <input type="hidden" name="next" value={{ request.GET.next }} />
+                {% endif %}
+                <button type="submit">{% trans "Change Password" %}</button>
+            </form>
+       
     </section>
 
     <section>
         <!-- Text Size Adjustment -->
-        <h2>Text Size</h2>
+        <h2>{% trans "Text Size" %}</h2>
         <button onclick="setFontSize('small')">A-</button>
         <button onclick="setFontSize('medium')">A</button>
         <button onclick="setFontSize('large')">A+</button>
@@ -31,17 +44,17 @@
 
     <section>
         <!-- High Contrast Mode -->
-        <h2>High Contrast Mode</h2>
-        <button onclick="toggleContrast()">Toggle High Contrast</button>
+        <h2>{% trans "High Contrast Mode" %}</h2>
+        <button onclick="toggleContrast()">{% trans "Toggle High Contrast" %}</button>
     </section>
 
     <section>
         <!-- Delete User Account -->
-        <h2>Delete Account</h2>
+        <h2>{% trans "Delete Account" %}</h2>
         <form action="{% url 'users:delete_account' %}" method="post" onsubmit="return confirmDelete();">
             {% csrf_token %}
-            <button type="submit" class="btn btn-danger">Delete Account</button>
+            <button type="submit" class="btn btn-danger">{% trans "Delete Account" %}</button>
         </form>
     </section>
-
+ </div>
 {% endblock %}

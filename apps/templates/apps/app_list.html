@@ -1,13 +1,14 @@
 {% extends 'layout.html' %}
+{% load i18n %}
 
 {% block title %}
-    App List
+    {% trans "App List" %}
 {% endblock %}
 
 {%block content%}
     <section>
         <div class="app-list-header">
-            <h1>App List</h1>
+            <h1>{% trans "App List" %}</h1>
             <a href="{% url 'apps:new-app' %}">
                 <span role="img" aria-label="New Post" title="New Post">New +</span>
             </a>

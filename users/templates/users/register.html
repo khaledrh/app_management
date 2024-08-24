@@ -1,16 +1,31 @@
 {% extends 'layout.html' %}
+{% load i18n %}
 
 {% block title %}
-    Register a New User
+    {% trans "Register User" %}
 {% endblock %}
 
 {%block content%}
-    <div class="register-form">
-        <h2>Register</h2>
+    <div class="form-container">
+        <h2>{% trans "Register User" %}</h2>
         <form class="form-with-validation" action="{% url 'users:register' %}" method="POST">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button class="form-submit" type="submit">Register</button>
+            <div>
+                <label for="id_old_password">{% trans "Username:" %}</label>
+                <input type="password" name="old_password" id="id_old_password" required>
+            </div>
+            <div>
+                <label for="id_new_password1">{% trans "Password:" %}</label>
+                <input type="password" name="new_password1" id="id_new_password1" required>
+            </div>
+            <div>
+                <label for="id_new_password2">{% trans "Re-enter Password:" %}</label>
+                <input type="password" name="new_password2" id="id_new_password2" required>
+            </div>
+            {% if request.GET.next %}
+                <input type="hidden" name="next" value={{ request.GET.next }} />
+            {% endif %}
+            <button class="button-17" type="submit">{% trans "Register" %}</button>
         </form>
     </div>
 

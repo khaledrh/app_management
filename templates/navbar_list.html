@@ -5,7 +5,7 @@
 </div>
 <ul>
     <li><a href="{% url 'apps:list'%}">
-        <span role="img" aria-label="Apps" title="Apps">Apps List</span>
+        <span role="img" aria-label="Apps" title="Apps">{% trans "Apps List" %}</span>
     </a></li>
     {% if user.is_authenticated %}
     <li><a href="{% url 'users:settings' %}">
@@ -13,21 +13,21 @@
     </a></li>
     <li><form class="logout" action="{% url 'users:logout' %}" method="post" style="display:inline;">
         {% csrf_token %}
-            <button class="logout-button" aria-label="User Logout" title="User Logout">Logout</button>
+            <button class="logout-button" aria-label="User Logout" title="User Logout">{% trans "Sign Out" %}</button>
     </form></li>
     {% else %}
     <li><a href="{% url 'users:register' %}">
-            <span role="img" aria-label="User Registration" title="User Registration">Sign Up</span>
+            <span role="img" aria-label="User Registration" title="User Registration">{% trans "Sign Up" %}</span>
         </a></li> 
         <li><a href="{% url 'users:login' %}">
-            <span role="img" aria-label="User Login" title="User Login">Sign In</span>
+            <span role="img" aria-label="User Login" title="User Login">{% trans "Sign In" %}</span>
         </a></li>
     {% endif %}
     <li><div class="dropdown">
-        <button class="dropbtn"> Language </button>
+        <button class="dropbtn"> {% trans "Language" %} </button>
         <div class="dropdown-content">
-            <a href="{% url 'set_language' 'fr' %}?next={{ request.path }}">French</a>
-            <a href="{% url 'set_language' 'en' %}?next={{ request.path }}">English</a>
+            <a href="{% url 'set_language' 'fr' %}?next={{ request.path }}">{% trans "French" %}</a>
+            <a href="{% url 'set_language' 'en' %}?next={{ request.path }}">{% trans "English" %}</a>
         </div>
         </div></li>
 </ul> 

@@ -1,72 +1,88 @@
 {% extends 'layout.html' %}
+{% load i18n %}
 
 {% block title %}
     {{ app.name }}
 {% endblock %}
 
-{%block content%}
-    <section>
-        <h1>{{ app.name }}</h1>
-            <p>{{ app.created_at }}</p>
-            <p>{{ app.updated_at }}</p>
-            <p>{{ app.uploaded_by }}</p>
-            <p>{{ app.apk_file_path }}</p>
+{% block content %}
+<section>
+    <h1>{{ app.name }}</h1>
+    <p><strong>{% trans "Created at:" %}</strong> {{ app.created_at }}</p>
+    <p><strong>{% trans "Last updated:" %}</strong> {{ app.updated_at }}</p>
+    <p><strong>{% trans "Uploaded by:" %}</strong> {{ app.uploaded_by }}</p>
+    <p><strong>{% trans "APK file:" %}</strong> {{ app.apk_file_path }}</p>
 
-        {% if test_run %}
-            <hr>
-            <h2>Test Results</h2>
+    {% if test_run %}
+        <hr>
+        <h2>{% trans "Test Results" %}</h2>
 
-            <div>
-                <h3>First Screen Screenshot:</h3>
-                <img src="{{ app.first_screen_screenshot_path.url }}" alt="First screen screenshot" width="300">
+        <div class="slide">
+            <div class="test-results">
+                <div class="result-item">
+                    <h3>{% trans "First Screen Screenshot:" %}</h3>
+                    <img src="{{ app.first_screen_screenshot_path.url }}" alt="First screen screenshot" width="300">
+                </div>
+
+                <div class="result-item">
+                    <h3>{% trans "Second Screen Screenshot:" %}</h3>
+                    <img src="{{ app.second_screen_screenshot_path.url }}" alt="Second screen screenshot" width="300">
+                </div>
+
+                <div class="result-item">
+                    <h3>{% trans "Video Recording:" %}</h3>
+                    <video width="300" controls>
+                        <source src="{{ app.video_recording_path.url }}" type="video/mp4">
+                        {% trans "Your browser does not support the video tag." %}
+                    </video>
+                </div>
             </div>
 
-            <div>
-                <h3>Second Screen Screenshot:</h3>
-                <img src="{{ app.second_screen_screenshot_path.url }}" alt="Second screen screenshot" width="300">
+            <!-- Slideshow navigation buttons -->
+            <div class="slideshow-controls">
+                <button class="slideshow-button prev" onclick="prevSlide()">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="12" fill="#444" />
+                        <polygon points="15,6 15,18 6,12" fill="black" />
+                    </svg>
+                </button>
+                <button class="slideshow-button next" onclick="nextSlide()">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="12" fill="#444" />
+                        <polygon points="9,6 9,18 18,12" fill="black" />
+                    </svg>
+                </button>
             </div>
+        </div>
 
-            <div>
-                <h3>Video Recording:</h3>
-                <video width="400" controls>
-                    <source src="{{ app.video_recording_path.url }}" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-            </div>
+        <div>
+            <h3>{% trans "UI Hierarchy:" %}</h3>
+            <pre>{{ app.ui_hierarchy }}</pre>
+        </div>
 
-            <div>
-                <h3>UI Hierarchy:</h3>
-                <pre>{{ app.ui_hierarchy }}</pre>
-            </div>
+        <div>
+            <h3>{% trans "Screen Changed:" %}</h3>
+            <p>{{ app.screen_changed|yesno:"Yes,No" }}</p>
+        </div>
+    {% endif %}
 
-            <div>
-                <h3>Screen Changed:</h3>
-                <p>{{ app.screen_changed|yesno:"Yes,No" }}</p>
-            </div>
-        {% endif %}
+    <form action="{% url 'apps:run_appium_test' app.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit">{% trans "Run Test" %}</button>
+    </form>
 
-        <form action="{% url 'apps:run_appium_test' app.id %}" method="post">
+    {% if request.user == app.uploaded_by %}
+        <a href="{% url 'apps:update' slug=app.slug %}" class="btn btn-primary">{% trans "Update" %}</a>
+        <form action="{% url 'apps:delete' slug=app.slug %}" method="post" style="display:inline;" onsubmit="return confirmDeletion();">
             {% csrf_token %}
-            <button type="submit">Run Test</button>
+            <button type="submit" class="btn btn-danger">{% trans "Delete" %}</button>
         </form>
-        
-        {% if request.user == app.uploaded_by %}
-            <a href="{% url 'apps:update' slug=app.slug %}" class="btn btn-primary">Update</a>
-            <form action="{% url 'apps:delete' slug=app.slug %}" method="post" style="display:inline;" onsubmit="return confirmDeletion();">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-danger">Delete</button>
-            </form>
-        {% endif %}
-        
-    </section>
+    {% endif %}
+</section>
 
-    <script>
-        function confirmDeletion() {
-            return confirm("Are you sure you want to delete this app? This action cannot be undone.");
-        }
-    </script>
-    </section>
-
-
-    
-{%endblock%}
+<script>
+    function confirmDeletion() {
+        return confirm("{% trans "Are you sure you want to delete this app? This action cannot be undone." %}");
+    }
+</script>
+{% endblock %}

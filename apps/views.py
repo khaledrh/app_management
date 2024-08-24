@@ -155,5 +155,5 @@ def run_appium_test_view(request, app_id):
     # Save the changes to the database
     app_upload.save()
 
-    # # Render the results in a template
-    return render(request, 'apps/app_page.html', {'app': app_upload})
+    # Redirect back to the app detail page
+    return redirect('apps:page', slug=app_upload.slug)
