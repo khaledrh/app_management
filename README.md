@@ -42,22 +42,29 @@ Before you begin, ensure you have met the following requirements:
 Follow these steps to set up the application:
 
 1. **Clone the Repository:**
+
    ```bash
    git clone https://github.com/yourusername/your-repo.git
    cd your-repo
 
 2. **Set Up a Virtual Environment:**
+
     ```bash
     python -m venv venv
     source venv\Scripts\activate
 
 3. **Install Python Dependencies:**
+
+    ```bash
     pip install -r requirements.txt
 
 4. **Install Appium:**
+
+    ```bash
     npm install -g appium
 
 5. **Install Android SDK:**
+
     Download the Android SDK from Android Developers.
     Follow the installation instructions for your operating system.
 
@@ -110,7 +117,7 @@ Follow these steps to set up the application:
 
 ## Testing
 
-    **To run the automated tests, use the following command:**
+1. **To run the automated tests, use the following command:**
 
     ```bash
     python manage.py test
